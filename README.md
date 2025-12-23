@@ -1,4 +1,4 @@
-# Continual-Learning-for-Multitask-Image-Classification
+# Continual Learning for Multitask Image Classification
 
 A comprehensive implementation and evaluation of continual learning (CL) methods for sequential multitask classification on Split MNIST. This project compares three approaches: **Sequential Fine-Tuning (Naive CL)**, **Elastic Weight Consolidation (EWC)**, and **Experience Replay**, demonstrating how replay-based methods effectively mitigate catastrophic forgetting.
 
@@ -19,41 +19,27 @@ This project addresses catastrophic forgetting through:
 | EWC (λ=2000) | 70.12% | 37.14% |
 | **Experience Replay** | **97.80%** | **1.84%** |
 
+---
+
 ## 📦 Repository Structure
 
 ```
-tp2_continual_learning/
+Continual-Learning-for-Multitask-Image-Classification/
 ├── README.md                          # This file
 ├── requirements.txt                   # Python dependencies
 ├── LICENSE                            # MIT License
 ├── .gitignore                         # Git ignore rules
 │
-├── tp2_cl/                            # Main package
-│   ├── __init__.py
-│   ├── config.py                      # Hyperparameters & configurations
-│   │
-│   ├── datasets/
-│   │   ├── __init__.py
-│   │   └── split_mnist.py             # Split MNIST task generation
-│   │
-│   ├── models/
-│   │   ├── __init__.py
-│   │   └── cnn.py                     # Small CNN architecture
-│   │
-│   ├── cl/                            # Continual Learning Methods
-│   │   ├── __init__.py
-│   │   ├── ewc.py                     # Elastic Weight Consolidation
-│   │   └── replay.py                  # Experience Replay buffer
-│   │
-│   └── utils/
-│       ├── __init__.py
-│       └── eval.py                    # Evaluation metrics
+├── cnn.py                             # Small CNN architecture
+├── eval.py                            # Evaluation metrics
+├── ewc.py                             # Elastic Weight Consolidation
+├── replay.py                          # Experience Replay buffer
+├── split_mnist.py                     # Split MNIST dataset
 │
-├── scripts/
-│   ├── train_naive.py                 # Naive sequential fine-tuning
-│   ├── train_ewc.py                   # EWC training script
-│   ├── train_replay.py                # Experience Replay training
-│   └── plot_results.py                # Generate comparison plots
+├── train_naive.py                     # Naive sequential fine-tuning
+├── train_ewc.py                       # EWC training script
+├── train_replay.py                    # Experience Replay training
+├── plot_results.py                    # Generate comparison plots
 │
 ├── results/                           # Experiment outputs
 │   ├── naive/
@@ -66,15 +52,14 @@ tp2_continual_learning/
 │       ├── acc_matrix.npy
 │       └── metrics.json
 │
-├── notebooks/
-│   └── analysis.ipynb                 # Jupyter notebook for exploration
-│
 ├── docs/
 │   └── REPORT.md                      # Full 2-4 page research report
 │
 └── data/                              # MNIST dataset (auto-downloaded)
     └── MNIST/
 ```
+
+---
 
 ## 🚀 Quick Start
 
@@ -87,8 +72,8 @@ tp2_continual_learning/
 
 1. **Clone the repository**:
 ```bash
-git clone https://github.com/yourusername/tp2_continual_learning.git
-cd tp2_continual_learning
+git clone https://github.com/NANInithin/Continual-Learning-for-Multitask-Image-Classification.git
+cd Continual-Learning-for-Multitask-Image-Classification
 ```
 
 2. **Create a virtual environment**:
@@ -111,14 +96,15 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 python -c "import torch; print(f'CUDA Available: {torch.cuda.is_available()}'); print(f'Device: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"CPU\"}')"
 ```
 
+---
+
 ## 📊 Running Experiments
 
 ### 1. Naive Sequential Fine-Tuning (Baseline)
 ```bash
-cd scripts
 python train_naive.py
 ```
-**Output**: Results saved to `../results/naive/`
+**Output**: Results saved to `results/naive/`
 
 ### 2. Elastic Weight Consolidation (EWC)
 ```bash
@@ -140,6 +126,8 @@ python plot_results.py
 - `comparison_accuracy.png` – Accuracy curves across tasks
 - `comparison_forgetting.png` – Average forgetting bar chart
 
+---
+
 ## 📈 Results Visualization
 
 The project generates two key comparison plots:
@@ -149,6 +137,8 @@ Shows how each method maintains accuracy as new tasks are learned. Experience Re
 
 ### Figure 2: Average Forgetting Comparison
 Bar chart comparing forgetting across methods. Replay achieves 20× lower forgetting than naive CL (1.84% vs 41.50%).
+
+---
 
 ## 🔬 Methodology
 
@@ -208,6 +198,8 @@ L_Replay = E_{(x,y) ~ D_t ∪ M} [ CrossEntropy(f_θ(x), y) ]
 
 **Overall Forgetting**: `F = (1/(T-1)) × Σ_j F_j`
 
+---
+
 ## 📚 Key Findings
 
 1. **Experience Replay Dominates**: 97.80% accuracy with 1.84% forgetting
@@ -215,23 +207,29 @@ L_Replay = E_{(x,y) ~ D_t ∪ M} [ CrossEntropy(f_θ(x), y) ]
 3. **Catastrophic Forgetting Severe**: Naive approach drops to 5.91% on Task 1 by end
 4. **Replay Overhead Negligible**: 1,000 samples (~13 MB) for ~97% accuracy improvement
 
+---
+
 ## 📖 Documentation
 
 - **Full Report**: See `docs/REPORT.md` for comprehensive 2-4 page analysis
 - **Code Comments**: All modules well-documented with docstrings
-- **Notebook**: `notebooks/analysis.ipynb` for interactive exploration
+- **Evaluation**: See results/ directory for detailed metrics
+
+---
 
 ## 🧪 Code Quality
 
 - ✅ Modular, well-documented architecture
-- ✅ PyTorch best practices (no browser storage, GPU-ready)
-- ✅ Reproducible experiments with fixed seeds
-- ✅ Clear separation of concerns (data, models, training, evaluation)
+- ✅ PyTorch best practices
+- ✅ Reproducible experiments
+- ✅ Clear separation of concerns
 - ✅ Comprehensive error handling
+
+---
 
 ## 🔧 Configuration
 
-Main hyperparameters in `tp2_cl/config.py` or in individual scripts:
+Main hyperparameters in individual scripts:
 
 ```python
 # Data
@@ -253,19 +251,23 @@ SAMPLES_PER_TASK = 200
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 ```
 
+---
+
 ## 📝 Citation
 
 If you use this project in your research, please cite:
 
 ```bibtex
-@project{tp2_continual_learning_2025,
-  author = {Your Name},
+@project{continual_learning_2025,
+  author = {NANInithin},
   title = {Continual Learning for Multitask Image Classification},
   year = {2025},
   publisher = {GitHub},
-  howpublished = {\url{https://github.com/yourusername/tp2_continual_learning}}
+  howpublished = {\url{https://github.com/NANInithin/Continual-Learning-for-Multitask-Image-Classification}}
 }
 ```
+
+---
 
 ## 📚 References
 
@@ -273,15 +275,7 @@ If you use this project in your research, please cite:
 - **EWC**: Kirkpatrick et al. (2017). *Overcoming catastrophic forgetting in neural networks*. PNAS, 114(13), 3521–3526.
 - **MNIST**: LeCun et al. (1998). *Gradient-based learning applied to document recognition*. IEEE, 86(11), 2278–2324.
 
-## ⚙️ Optional Extensions
-
-Implement for advanced analysis:
-
-1. **Hyperparameter Sweep**: Vary EWC λ ∈ [100, 1000, 5000, 10000]
-2. **Buffer Size Sensitivity**: Test Replay with 50, 100, 200, 500 samples/task
-3. **Task Order Randomization**: Permute task sequence and measure robustness
-4. **Task-Specific Heads**: Implement multi-head architecture for comparison
-5. **Fashion-MNIST**: Validate on more challenging variant
+---
 
 ## 🤝 Contributing
 
@@ -293,13 +287,17 @@ Contributions welcome! Areas for improvement:
 - Hyperparameter optimization framework
 - Extended analysis notebook
 
+---
+
 ## 📄 License
 
 MIT License – See LICENSE file for details
 
+---
+
 ## 👤 Author
 
-**Your Name**  
+**NANInithin**  
 Paris Saclay University, Master's in Machine Vision and AI  
 December 2025
 
@@ -314,6 +312,8 @@ December 2025
 | Results don't match report | Check random seed, hardware differences may cause ~1% variance |
 | Missing MNIST data | Scripts auto-download on first run; ensure internet connection |
 
+---
+
 ## 📞 Support
 
 For issues, questions, or suggestions:
@@ -325,4 +325,4 @@ For issues, questions, or suggestions:
 ---
 
 **Last Updated**: December 2025  
-**Status**: ✅ Complete & Ready for Production
+**Status**: ✅ Complete & Ready for Submission
